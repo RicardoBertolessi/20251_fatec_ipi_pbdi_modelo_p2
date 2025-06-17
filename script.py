@@ -13,9 +13,13 @@ df = ler_base()
 #REQ 3
 #essa função recebe a base lida anteriormente
 #ela deve devolver uma tupla contendo as features e a classe
-def dividir_em_features_e_classe(base):
-  pass
+def dividir_em_features_e_classe(dataset):
+  features = dataset.iloc[:, :-1].values
+  classe = dataset.iloc[:, -1].values
+  return classe
 
+base = ler_base()
+classe = dividir_em_features_e_classe(base)
 #REQ 4
 #essa função recebe as features
 #ela deve devolver as features da seguinte forma
