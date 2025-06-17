@@ -1,6 +1,10 @@
 #REQ 1
 # faça os imports que julgar necessários
 import pandas as pd
+from sklearn.impute import SimpleImputer
+import numpy as np
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
 
 #REQ 2
 #essa função deve devolver a base de dados
@@ -16,10 +20,10 @@ df = ler_base()
 def dividir_em_features_e_classe(dataset):
   features = dataset.iloc[:, :-1].values
   classe = dataset.iloc[:, -1].values
-  return classe
+  return features, classe
 
 base = ler_base()
-classe = dividir_em_features_e_classe(base)
+features, classe = dividir_em_features_e_classe(base)
 #REQ 4
 #essa função recebe as features
 #ela deve devolver as features da seguinte forma
@@ -28,14 +32,33 @@ classe = dividir_em_features_e_classe(base)
 #Valores faltantes da coluna "Gastos com marketing": Substituir por zero
 #Valores faltantes da coluna "Estado": Substituir pela moda
 def lidar_com_valores_faltantes(features):
-  pass
+  imputer_media = SimpleImputer(missing_values=np.nan, strategy="mean")
+  features[:, [0]] = imputer_media.fit_transform(features[:, [0]])
+
+  imputer_mediana = SimpleImputer(missing_values=np.nan, strategy="median")
+  features[:, [1]] = imputer_mediana.fit_transform(features[:, [1]])
+
+  imputer_zero = SimpleImputer(missing_values=np.nan, strategy="constant", fill_value=0)
+  features[:, [2]] = imputer_zero.fit_transform(features[:, [2]])
+
+  imputer_moda = SimpleImputer(missing_values=np.nan, strategy="most_frequent")
+  features[:, [3]] = imputer_moda.fit_transform(features[:, [3]])
+  return features
+
+features, classe = dividir_em_features_e_classe(base)
+features_tratadas = lidar_com_valores_faltantes(features)
 
 #REQ 5
 #essa função recebe as features
 #ela deve devolver as features da seguinte forma
 #Variável "Estado": Codificar com OneHotEncoding
-def codificar_categoricas(features):
-  pass
+# def codificar_categoricas(features):
+#   columnTransformer = ColumnTransformer(
+#     transformers=[('encoder', OneHotEncoder(), [3])],
+#     remainder='passthrough' 
+#     )
+#   features = columnTransformer.fit_transform(features)
+#   return features
 
 #REQ 6
 #essa função recebe as features e a classe
