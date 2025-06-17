@@ -3,7 +3,7 @@ Preencha os dados a seguir, em ordem alfabética. **Não use abreviações nos n
 
 | Nome Completo | RA |
 |---------------|----|
-|               |    |
-|               |    |
+|  Ricardo Bertolessi Souto Galdino             | 204138241131   |
+|  Eduardo Jeremias Cardoso             | 2041382411017   |
 |               |    |
 
